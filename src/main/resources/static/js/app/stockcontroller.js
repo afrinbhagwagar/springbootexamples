@@ -3,6 +3,7 @@ var module = angular.module('stock.controllers', []);
 module.controller("stockcontroller", [ "$scope", "stockservice",
 		function($scope, stockservice) {
 			$scope.singleStockSelected = false;
+			$scope.addButtonView = false;
 			$scope.selectedAll = false;
 			stockservice.getAllStocks().then(function(value) {
 				$scope.allStocks = value.data;
@@ -67,15 +68,18 @@ module.controller("stockcontroller", [ "$scope", "stockservice",
 			    $scope.selectedStock = null;
 			    $scope.singleStockSelected = false;
 			    $scope.selectedAll = false;
+			    $scope.addButtonView = false;
 			}
 			
 			  $scope.setSelectedStock = function (stock){
 			    if($scope.allStocks.filter(x => x.selected).length > 1){
 			      $scope.selectedStock = null;
 			      $scope.singleStockSelected = false;
+			      $scope.addButtonView = true;
 			    } else {
 			      $scope.selectedStock = angular.copy($scope.allStocks.find(x => x.selected));
 			      $scope.singleStockSelected = !!$scope.selectedStock;
+			      $scope.addButtonView = false;
 			    }
 			  }
 		} ]);
